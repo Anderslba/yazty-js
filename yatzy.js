@@ -11,7 +11,6 @@ function onePair(frequency) {
   while (i > 0 && result === 0) {
     if (frequency[i] >= 2) {
       result = i * 2;
-      highestFound = true;
     } else {
       i--;
     }
@@ -24,7 +23,7 @@ function twoPairs(frequency) {
   let result = 0;
   let i = frequency.length - 1;
 
-  while (i > 0 && pairsFound >= 2) {
+  while (i > 0 && pairsFound < 2) {
     if (frequency[i] >= 2) {
       pairsFound++;
       result += i * 2;
@@ -141,32 +140,18 @@ function yatzy(frequency) {
 // funktion til at udregne forekomster af hver terning ud fra dice
 function calculateFrequencies(dice) {
   let freq = [0, 0, 0, 0, 0, 0, 0];
-  for (die of dice) {
+  for (let die of dice) {
     freq[die.value]++;
   }
   return freq;
 }
 
-//Funktion til at toggle at holde en terning
-function toggleHold(die) {
-  die.hold = !die.hold;
-}
-
-//Funktion til at shuffle terninger
-function rollDice(dice) {
-  for (die of dice) {
-    if (die.hold === false) {
-      die.value = Math.floor(Math.random() * 6 + 1);
-    }
-  }
-}
-
 //Logik til spillets state
 function startGame() {
-  game = {}
+  const game = {}
+  let frequency = [0, 0, 0, 0, 0, 0, 0]
 
   const dice = [
-    { value: 0, hold: false },
     { value: 0, hold: false },
     { value: 0, hold: false },
     { value: 0, hold: false },
@@ -253,16 +238,75 @@ function startGame() {
     },
   ];
 
-  let turn = 0;
+  let resultsLeft = results.length
+
+  const rollDice = function () {
+    if (game.turn < 3) {
+      for (let die of dice) {
+        if (die.hold === false) {
+          die.value = Math.floor(Math.random() * 6 + 1)
+        }
+      }
+      game.turn++;
+      frequency = calculateFrequencies(dice)
+    }
+  }
+
+  const toggleHold = function (num) {
+    dice[num].hold = !dice[num].hold;
+  }
+
+  const chooseResult = function (resultNum) {
+    if (!results[resultNum].isUsed && game.turn > 0) {
+      // udregn result / point for det trykkede resultat felt
+      let resultFromActual = results[resultNum].calcResult(frequency);
+
+      // opdater game variabler og internt i result
+      results[resultNum].result = resultFromActual
+      game.total += resultFromActual
+
+      if (resultNum < 6) {
+        game.sum = getSum()
+        game.bonus = getBonus()
+      }
+
+      game.turn = 0
+      results[resultNum].isUsed = true
+
+      //opdater variabel til at tjekke om spil er slut, og tjek om spil er slut
+
+      resultsLeft--
+      if (resultsLeft === 0) {
+        game.ended = true
+      }
+    }
+  }
+
+  const getSum = function () {
+    let result = 0;
+    for (let i = 0; i < 6; i++) {
+      result += results[i].result
+    }
+    return result
+  }
+
+  const getBonus = function () {
+    if (game.sum >= 63) {
+      return 50
+    }
+    return 0
+  }
 
   game.dice = dice
-  game.turn = turn
+  game.turn = 0
   game.results = results
-  game.rollDice = (dice) => rollDice(dice)
+  game.sum = 0
+  game.bonus = 0
+  game.total = 0
+  game.rollDice = () => rollDice()
+  game.toggleHold = (diceNum) => toggleHold(diceNum)
+  game.chooseResult = (resultNum) => chooseResult(resultNum)
+  game.ended = false
 
   return game
 }
-
-
-
-
