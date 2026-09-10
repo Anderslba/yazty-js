@@ -118,7 +118,7 @@ function largeStraight(frequency) {
 function chance(frequency) {
   let result = 0;
   for (let i = 1; i < frequency.length; i++) {
-    result += i*frequency[i]
+    result += i * frequency[i]
   }
   return result;
 }
@@ -161,95 +161,108 @@ function rollDice(dice) {
   }
 }
 
-
 //Logik til spillets state
-dice = [
-  { value: 0, hold: false },
-  { value: 0, hold: false },
-  { value: 0, hold: false },
-  { value: 0, hold: false },
-  { value: 0, hold: false },
-  { value: 0, hold: false },
-];
+function startGame() {
+  game = {}
 
-const results = [
-  {
-    title: "1-s",
-    result: 0, isUsed: false, calcResult: (frequency) => oneToSix(frequency, 1)
-  },
-  {
-    title: "2-s",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => oneToSix(frequency, 2),
-  },
-  {
-    title: "3-s",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => oneToSix(frequency, 3),
-  },
-  {
-    title: "4-s",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => oneToSix(frequency, 4),
-  },
-  {
-    title: "5-s",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => oneToSix(frequency, 5),
-  },
-  {
-    title: "6-s",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => oneToSix(frequency, 6),
-  },
-  {
-    title: "One pair",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => onePair(frequency),
-  },
-  {
-    title: "Two pairs",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => twoPairs(frequency),
-  },
-  {
-    title: "Three same",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => threeSame(frequency),
-  },
-  {
-    title: "Four same",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => fourSame(frequency),
-  },
-  {
-    title: "Full house",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => fullHouse(frequency),
-  },
-  {
-    title: "Small straight",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => smallStraight(frequency),
-  },
-  {
-    title: "Large straight",
-    result: 0, isUsed: false,
-    calcResult: (frequency) => largeStraight(frequency),
-  },
-  { 
-    title: "Chance", 
-    result: 0, 
-    isUsed: false, 
-    calcResult: (frequency) => chance(frequency) 
-  },
-  { 
-    title: "Yatzy", 
-    result: 0, isUsed: 
-    false, 
-    calcResult: (frequency) => yatzy(frequency) 
-  },
-];
+  const dice = [
+    { value: 0, hold: false },
+    { value: 0, hold: false },
+    { value: 0, hold: false },
+    { value: 0, hold: false },
+    { value: 0, hold: false },
+    { value: 0, hold: false }
+  ];
 
-let turn = 0;
+  const results = [
+    {
+      title: "1-s",
+      result: 0, isUsed: false, calcResult: (frequency) => oneToSix(frequency, 1)
+    },
+    {
+      title: "2-s",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => oneToSix(frequency, 2),
+    },
+    {
+      title: "3-s",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => oneToSix(frequency, 3),
+    },
+    {
+      title: "4-s",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => oneToSix(frequency, 4),
+    },
+    {
+      title: "5-s",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => oneToSix(frequency, 5),
+    },
+    {
+      title: "6-s",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => oneToSix(frequency, 6),
+    },
+    {
+      title: "One pair",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => onePair(frequency),
+    },
+    {
+      title: "Two pairs",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => twoPairs(frequency),
+    },
+    {
+      title: "Three same",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => threeSame(frequency),
+    },
+    {
+      title: "Four same",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => fourSame(frequency),
+    },
+    {
+      title: "Full house",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => fullHouse(frequency),
+    },
+    {
+      title: "Small straight",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => smallStraight(frequency),
+    },
+    {
+      title: "Large straight",
+      result: 0, isUsed: false,
+      calcResult: (frequency) => largeStraight(frequency),
+    },
+    {
+      title: "Chance",
+      result: 0,
+      isUsed: false,
+      calcResult: (frequency) => chance(frequency)
+    },
+    {
+      title: "Yatzy",
+      result: 0, isUsed:
+        false,
+      calcResult: (frequency) => yatzy(frequency)
+    },
+  ];
+
+  let turn = 0;
+
+  game.dice = dice
+  game.turn = turn
+  game.results = results
+  game.rollDice = (dice) => rollDice(dice)
+
+  return game
+}
+
+
+
 
