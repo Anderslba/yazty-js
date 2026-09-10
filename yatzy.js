@@ -243,7 +243,7 @@ export function startGame() {
   const rollDice = function () {
     if (game.turn < 3) {
       for (let die of dice) {
-        if (die.hold === false) {
+        if (!die.hold) {
           die.value = Math.floor(Math.random() * 6 + 1)
         }
       }
@@ -303,7 +303,7 @@ export function startGame() {
   game.sum = 0
   game.bonus = 0
   game.total = 0
-  game.rollDice = () => rollDice()
+  game.rollDice = rollDice
   game.toggleHold = (diceNum) => toggleHold(diceNum)
   game.chooseResult = (resultNum) => chooseResult(resultNum)
   game.ended = false

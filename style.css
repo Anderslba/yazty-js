@@ -12,6 +12,13 @@
     margin: auto
 }
 
+div, img {
+    border-radius: 8px;
+}
+
+.container {
+    grid-column: 1 / -1;
+}
 
 .dice-container {
     display: grid;
@@ -21,6 +28,19 @@
     grid-template-rows: 1fr 1fr;
     justify-content: center; 
     align-items: top; 
+    background-color: white;
+}
+
+.dice > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.dicerow {
+    display: flex;
+    justify-content: center;
     gap: 30px;
     padding: 25px;
 }

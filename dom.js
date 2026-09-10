@@ -1,10 +1,13 @@
-import { startGame } from "./yatzy.js";
+const btnRollDie = document.querySelector('#roll-button')
+const btnReset = document.querySelector('reset-button')
+const dice = document.querySelectorAll('.dice > img')
 
-const btnRollDie = document.querySelector('#roll-button');
-const btnReset = document.querySelector('reset-button');
-const diceElement = document.querySelector('.die');
+const game = startGame()
 
+btnRollDie.addEventListener('click', () => {
+    game.rollDice()
 
-
-const game = startGame();
-
+    for (let i in dice) {
+        dice[i].src = `Terninger/${game.dice[i].value} terning.png`
+    }
+})
