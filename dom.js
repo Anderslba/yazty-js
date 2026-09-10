@@ -11,6 +11,7 @@ btnRollDie.addEventListener('click', () => {
         dice[i].firstChild.src = `Terninger/${game.dice[i].value} terning.png`
     }
 })
+<<<<<<< HEAD
 
 btnReset.addEventListener('click', () => {
     if (window.confirm("Vil du genstarte spil?")) {
@@ -24,3 +25,5 @@ function resetUi() {
         dice[i].src = `Terninger/blank.png`
     }
 }
+=======
+>>>>>>> 2569997b5e872e7fab013809337a737f677d5bed
