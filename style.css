@@ -1,15 +1,37 @@
+body {
+    display: grid;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+button {
+    padding: 16px 32px;
+    border: 1px solid;
+    font-size: 18px;
+    border-radius: 32px;
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+input {
+    width: 50px;
+}
+
+button:hover {
+    background-color: #ececec;
+}
+
 .wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
     grid-gap: 1em;
     border-radius: 10px;
     width: 550px;
-    height: 850px;
     border: 1px solid black;
     background-color: maroon;
     padding: 10px;
-    margin: auto
 }
 
 div, img {
@@ -20,16 +42,38 @@ div, img {
     grid-column: 1 / -1;
 }
 
+.upper-part {
+    display: grid;
+    gap: 20px;
+}
+
 .dice-container {
     display: grid;
-    border: 1px solid black;
-    border-radius: 5px;
-    grid-template-columns: repeat(5, 64px);
-    grid-template-rows: 1fr 1fr;
-    justify-content: center; 
-    align-items: top; 
-    background-color: white;
+    grid-template-columns: 80px 80px 80px 80px 80px;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.dice {
+    width: 80px;
+    height: 80px;
+    justify-self: center;
+    border: 2px solid rgb(7, 179, 1);
+    cursor: pointer;
+}
+
+/* toggles når man trykker på en dice */
+.hold {
+    border-color: red;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+}
+
 
 .dice > img {
     width: 100%;
@@ -47,19 +91,6 @@ div, img {
 
 
 
-.dice {
-    width: 64px;
-    height: 64px;
-    border: 2px solid rgb(7, 179, 1);
-}
-
-.button {
-    text-align: center;
-    font-size: 16px;
-    padding: 10px 20px;
-    grid-column: 5;
-}
-
 .score-container {
     display: grid;
     border: 1px solid black;
@@ -75,9 +106,7 @@ div, img {
     
 }
 
-.score input {
-    width: 50px;
-}
+
 
 .sum {
     grid-row: 2;

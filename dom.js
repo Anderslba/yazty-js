@@ -1,18 +1,29 @@
 const btnRollDie = document.querySelector('#roll-button')
 const btnReset = document.querySelector('#reset-button')
 const dice = document.querySelectorAll('.dice')
+const turn = document.querySelector('#turn')
 
 let game = startGame()
 
+//tilføj event listeners
 btnRollDie.addEventListener('click', () => {
     game.rollDice()
 
     for (let i = 0; i < dice.length; i++) {
-        dice[i].firstChild.src = `Terninger/${game.dice[i].value} terning.png`
+        dice[i].firstChild.src = `images/dice${game.dice[i].value}.png`
     }
-})
-<<<<<<< HEAD
 
+    turn.textContent = game.turn
+})
+
+for (let i = 0; i < dice.length; i++) {
+    dice[i].addEventListener('click', () => {
+        game.toggleHold(i)
+        dice[i].classList.toggle('hold')
+    })
+} 
+
+// event listener og reset af game
 btnReset.addEventListener('click', () => {
     if (window.confirm("Vil du genstarte spil?")) {
         game = startGame()
@@ -22,8 +33,12 @@ btnReset.addEventListener('click', () => {
 
 function resetUi() {
     for (let i = 0; i < dice.length; i++) {
-        dice[i].src = `Terninger/blank.png`
+        dice[i].firstChild.src = 'images/blank.png'
+        dice[i].classList.remove('hold')
     }
+    turn.textContent = game.turn
 }
-=======
->>>>>>> 2569997b5e872e7fab013809337a737f677d5bed
+
+function createScoreFields() {
+
+}

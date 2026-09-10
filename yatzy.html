@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="yatzy.js" defer></script>
-    <script type="module" src="dom.js" defer></script>
+    <script src="yatzy.js" defer></script>
+    <script src="dom.js" defer></script>
     <title>Yatzy</title>
 </head>
 <body>
     <div class="wrapper">
-        <div class="dice-container">
-            <div class="dice"><img src="Terninger/dice1.png"></div>
-            <div class="dice"><img src="Terninger/dice2.png"></div>
-            <div class="dice"><img src="Terninger/dice3.png"></div>
-            <div class="dice"><img src="Terninger/dice4.png"></div>
-            <div class="dice"><img src="Terninger/dice5.png"></div>
-            
-            <button class="button" id="roll-button">Roll</button> 
+        <div class="upper-part">
+            <div class="dice-container">
+                <div class="dice"><img src="images/blank.png"></div>
+                <div class="dice"><img src="images/blank.png"></div>
+                <div class="dice"><img src="images/blank.png"></div>
+                <div class="dice"><img src="images/blank.png"></div>
+                <div class="dice"><img src="images/blank.png"></div>
+            </div>
 
-            <div> <label for="rollButton">Turn</label> </div>
-             
+            <div class="controls">
+                <div><span>Turn: </span><span id="turn">0</span></div>
+                <button class="button" id="roll-button">Roll</button>
+            </div>
         </div>
 
         <div class="score-container">
@@ -39,10 +41,11 @@
             <div class="score">Full house       <input type="text" value="0"></div>
             <div class="score">Small straight   <input type="text" value="0"></div>
             <div class="score">Large straight   <input type="text" value="0"></div>
-            <div class="score">Chance           <input type="text" value="16"></div>
+            <div class="score">Chance           <input type="text" value="0"></div>
             <div class="score">Yatzy            <input type="text" value="0"></div>
         </div>
            
     </div>
+    <button id ="reset-button">Start et nyt spil</button>
 </body>
 </html>

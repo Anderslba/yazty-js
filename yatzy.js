@@ -147,7 +147,7 @@ function calculateFrequencies(dice) {
 }
 
 //Logik til spillets state
-export function startGame() {
+function startGame() {
   const game = {}
   let frequency = [0, 0, 0, 0, 0, 0, 0]
 
