@@ -180,7 +180,7 @@ const results = [
   {
     title: "2-s",
     result: 0, isUsed: false,
-    calcResult: (frequency) => oneToSix(frequency, 2),
+  calcResult: (frequency) => oneToSix(frequency, 2),
   },
   {
     title: "3-s",
