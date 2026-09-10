@@ -270,11 +270,17 @@ function startGame() {
         game.bonus = getBonus()
       }
 
+      // reset terningerne
+      for (let die of dice) {
+        die.hold = false
+        die.value = 0
+      }
+
       game.turn = 0
       results[resultNum].isUsed = true
 
-      //opdater variabel til at tjekke om spil er slut, og tjek om spil er slut
 
+      //opdater variabel til at tjekke om spil er slut, og tjek om spil er slut
       resultsLeft--
       if (resultsLeft === 0) {
         game.ended = true
