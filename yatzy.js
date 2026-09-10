@@ -253,7 +253,9 @@ function startGame() {
   }
 
   const toggleHold = function (num) {
-    dice[num].hold = !dice[num].hold;
+    if (game.turn > 0) {
+      dice[num].hold = !dice[num].hold;
+    }
   }
 
   const chooseResult = function (resultNum) {

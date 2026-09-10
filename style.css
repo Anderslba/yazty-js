@@ -64,7 +64,7 @@ div, img {
 
 /* toggles når man trykker på en dice */
 .hold {
-    border-color: red;
+    border-color: rgb(195, 8, 8);
 }
 
 .controls {

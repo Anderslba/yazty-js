@@ -18,8 +18,11 @@ btnRollDie.addEventListener('click', () => {
 
 for (let i = 0; i < dice.length; i++) {
     dice[i].addEventListener('click', () => {
-        game.toggleHold(i)
-        dice[i].classList.toggle('hold')
+        if (game.turn > 0) {
+            game.toggleHold(i)
+            dice[i].classList.toggle('hold')
+        }
+        
     })
 } 
 
@@ -31,6 +34,8 @@ btnReset.addEventListener('click', () => {
     }
 })
 
+
+// hjælpemetoder
 function resetUi() {
     for (let i = 0; i < dice.length; i++) {
         dice[i].firstChild.src = 'images/blank.png'
