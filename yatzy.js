@@ -232,8 +232,8 @@ function startGame() {
     },
     {
       title: "Yatzy",
-      result: 0, isUsed:
-        false,
+      result: 0, 
+      isUsed: false,
       calcResult: (frequency) => yatzy(frequency)
     },
   ];
@@ -290,7 +290,7 @@ function startGame() {
     }
   }
 
-  const getSum = function () {
+  const getSum = function() {
     let result = 0;
     for (let i = 0; i < 6; i++) {
       result += results[i].result
@@ -298,11 +298,20 @@ function startGame() {
     return result
   }
 
-  const getBonus = function () {
+  const getBonus = function() {
     if (game.sum >= 63) {
       return 50
     }
     return 0
+  }
+
+  const getValue = function(index) {
+      if (results[index].isUsed) {
+        return results[index].result
+
+      } else {
+        return results[index].calcResult(frequency)
+      }
   }
 
   game.dice = dice
@@ -315,6 +324,8 @@ function startGame() {
   game.toggleHold = (diceNum) => toggleHold(diceNum)
   game.chooseResult = (resultNum) => chooseResult(resultNum)
   game.ended = false
+  game.getValue = (index) => getValue(index)
+
 
   return game
 }

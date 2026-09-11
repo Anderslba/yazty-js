@@ -3,9 +3,14 @@ const btnReset = document.querySelector('#reset-button')
 const dice = document.querySelectorAll('.dice')
 const turn = document.querySelector('#turn')
 const scoreContainer = document.querySelector(".score-container")
+const sum = document.querySelector(".sum > input")
+const bonus = document.querySelector(".bonus > input")
+const total = document.querySelector(".total > input") 
 
 let game = startGame()
 createScoreFields()
+
+const scoreValue = document.querySelectorAll(".scoreValue")
 
 //tilføj event listeners
 btnRollDie.addEventListener('click', () => {
@@ -16,6 +21,7 @@ btnRollDie.addEventListener('click', () => {
     }
 
     turn.textContent = game.turn
+    updateScore()
 })
 
 for (let i = 0; i < dice.length; i++) {
@@ -60,7 +66,29 @@ function createScoreFields() {
         input.style.gridColumn = 2
         input.style.gridRow = i+1
 
+        input.classList.add("scoreValue")
+
+        input.addEventListener('click', () => { 
+            game.chooseResult(i)
+            turn.textContent = game.turn
+            input.classList.add("selected")
+            if (i < 6) {
+                sum.value = game.sum
+                bonus.value = game.bonus
+            }
+            total.value = game.total
+            resetUi()
+        })
+
         scoreContainer.appendChild(input)
         scoreContainer.appendChild(label)
     }
 }
+
+
+function updateScore( ) {
+    for (let i = 0; i < scoreValue.length; i++ ) {
+        scoreValue[i].value = game.getValue(i) 
+    }
+}
+
