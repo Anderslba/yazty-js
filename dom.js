@@ -12,6 +12,19 @@ btnRollDie.addEventListener('click', () => {
     }
 })
 
+<<<<<<< Updated upstream
+=======
+for (let i = 0; i < dice.length; i++) {
+    dice[i].addEventListener('click', () => {
+        if (game.turn > 0) {
+            game.toggleHold(i)
+            dice[i].classList.toggle('hold')
+        }
+    })
+}
+
+// event listener og reset af game
+>>>>>>> Stashed changes
 btnReset.addEventListener('click', () => {
     if (window.confirm("Vil du genstarte spil?")) {
         game = startGame()
