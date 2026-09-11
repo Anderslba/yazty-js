@@ -17,6 +17,7 @@ button {
 
 input {
     width: 50px;
+    cursor: pointer;
 }
 
 button:hover {
