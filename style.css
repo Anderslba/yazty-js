@@ -44,10 +44,16 @@ div, img {
 
 .upper-part {
     display: grid;
+    grid-template-areas: 
+        "dice dice"
+        "turn roll";
     gap: 20px;
+    padding: 2em;
 }
 
 .dice-container {
+    grid-area: dice;
+
     display: grid;
     grid-template-columns: 80px 80px 80px 80px 80px;
     justify-content: space-between;
@@ -62,17 +68,20 @@ div, img {
     cursor: pointer;
 }
 
+.turn {
+    grid-area: turn;
+}
+
+#roll-button {
+    grid-area: roll;
+}
+
 /* toggles når man trykker på en dice */
 .hold {
     border-color: rgb(195, 8, 8);
 }
 
-.controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 18px;
-}
+
 
 
 .dice > img {
