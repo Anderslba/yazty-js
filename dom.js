@@ -69,15 +69,24 @@ function createScoreFields() {
         input.classList.add("scoreValue")
 
         input.addEventListener('click', () => { 
-            game.chooseResult(i)
-            turn.textContent = game.turn
-            input.classList.add("selected")
-            if (i < 6) {
-                sum.value = game.sum
-                bonus.value = game.bonus
+            if (game.turn > 0 && !game.results[i].isUsed) {
+                game.chooseResult(i)
+                turn.textContent = game.turn
+                input.classList.add("selected")
+                if (i < 6) {
+                    sum.value = game.sum
+                    bonus.value = game.bonus
+                }
+                total.value = game.getTotal()
+                
+                resetUi()
+                if (game.ended) {
+                    window.alert(`Spillet er slut! Du fik: ${total.value} points`)
+                    btnRollDie.removeEventListener();
+                }
+                
             }
-            total.value = game.total
-            resetUi()
+            
         })
 
         scoreContainer.appendChild(input)

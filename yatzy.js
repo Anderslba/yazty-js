@@ -239,6 +239,7 @@ function startGame() {
   ];
 
   let resultsLeft = results.length
+  let total = 0
 
   const rollDice = function () {
     if (game.turn < 3) {
@@ -265,13 +266,14 @@ function startGame() {
 
       // opdater game variabler og internt i result
       results[resultNum].result = resultFromActual
-      game.total += resultFromActual
+      
 
       if (resultNum < 6) {
         game.sum = getSum()
         game.bonus = getBonus()
       }
 
+      total += resultFromActual
       // reset terningerne
       for (let die of dice) {
         die.hold = false
@@ -304,6 +306,10 @@ function startGame() {
     }
     return 0
   }
+  
+  const getTotal = function() {
+    return total + game.bonus
+  }
 
   const getValue = function(index) {
       if (results[index].isUsed) {
@@ -319,12 +325,12 @@ function startGame() {
   game.results = results
   game.sum = 0
   game.bonus = 0
-  game.total = 0
   game.rollDice = rollDice
   game.toggleHold = (diceNum) => toggleHold(diceNum)
   game.chooseResult = (resultNum) => chooseResult(resultNum)
   game.ended = false
   game.getValue = (index) => getValue(index)
+  game.getTotal = getTotal
 
 
   return game
