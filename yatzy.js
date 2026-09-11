@@ -332,6 +332,5 @@ function startGame() {
   game.getValue = (index) => getValue(index)
   game.getTotal = getTotal
 
-
   return game
 }
