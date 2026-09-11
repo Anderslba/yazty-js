@@ -118,3 +118,10 @@ div, img {
     grid-row: 15;
     grid-column: 4;
 }
+
+.selected {
+  background-color: #e0e0e0;
+  color: #888888;
+  cursor: not-allowed;
+  border: 1px solid #ccc;
+}
