@@ -102,6 +102,7 @@ div, img {
     grid-auto-rows: 20px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 10px;
+    padding: 16px;
 }
 
 .sum {
