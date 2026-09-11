@@ -2,8 +2,10 @@ const btnRollDie = document.querySelector('#roll-button')
 const btnReset = document.querySelector('#reset-button')
 const dice = document.querySelectorAll('.dice')
 const turn = document.querySelector('#turn')
+const scoreContainer = document.querySelector(".score-container")
 
 let game = startGame()
+createScoreFields()
 
 //tilføj event listeners
 btnRollDie.addEventListener('click', () => {
@@ -16,30 +18,17 @@ btnRollDie.addEventListener('click', () => {
     turn.textContent = game.turn
 })
 
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> dev
 for (let i = 0; i < dice.length; i++) {
     dice[i].addEventListener('click', () => {
         if (game.turn > 0) {
             game.toggleHold(i)
             dice[i].classList.toggle('hold')
         }
-<<<<<<< HEAD
         
     })
 } 
 
 // event listener og reset af game
-=======
-    })
-}
-
-// event listener og reset af game
->>>>>>> Stashed changes
->>>>>>> dev
 btnReset.addEventListener('click', () => {
     if (window.confirm("Vil du genstarte spil?")) {
         game = startGame()
@@ -58,5 +47,20 @@ function resetUi() {
 }
 
 function createScoreFields() {
+    for (let i = 0; i < game.results.length; i++) {
+        const label = document.createElement('label')
+        const input = document.createElement('input')
 
+        label.textContent = game.results[i].title + ': '
+        label.style.gridColumn = 1
+        label.style.gridRow = i+1
+
+        input.id = 'score-field' + (i+1)
+        input.readOnly = true
+        input.style.gridColumn = 2
+        input.style.gridRow = i+1
+
+        scoreContainer.appendChild(input)
+        scoreContainer.appendChild(label)
+    }
 }
