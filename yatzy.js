@@ -4,20 +4,6 @@ function oneToSix(frequency, eyes) {
   return frequency[eyes] * eyes;
 }
 
-function onePair(frequency) {
-  let result = 0;
-  let i = frequency.length - 1;
-
-  while (i > 0 && result === 0) {
-    if (frequency[i] >= 2) {
-      result = i * 2;
-    } else {
-      i--;
-    }
-  }
-  return result;
-}
-
 function twoPairs(frequency) {
   let pairsFound = 0;
   let result = 0;
@@ -37,27 +23,13 @@ function twoPairs(frequency) {
   return result;
 }
 
-function threeSame(frequency) {
+function amountSame(frequency, amount) {
   let result = 0;
   let i = frequency.length - 1;
 
   while (i > 0 && result === 0) {
-    if (frequency[i] >= 3) {
-      result = i * 3;
-    } else {
-      i--;
-    }
-  }
-  return result;
-}
-
-function fourSame(frequency) {
-  let result = 0;
-  let i = frequency.length - 1;
-
-  while (i > 0 && result === 0) {
-    if (frequency[i] >= 4) {
-      result = i * 4;
+    if (frequency[i] >= amount) {
+      result = i * amount;
     } else {
       i--;
     }
@@ -88,11 +60,11 @@ function fullHouse(frequency) {
 
 function smallStraight(frequency) {
   let points = 15;
-  let smallStraight = true;
+  let isSmallStraight = true;
   let i = 1;
-  while (i < 6 && smallStraight) {
+  while (i < 6 && isSmallStraight) {
     if (frequency[i] < 1) {
-      smallStraight = false;
+      isSmallStraight = false;
       points = 0;
     }
     i++;
@@ -102,11 +74,11 @@ function smallStraight(frequency) {
 
 function largeStraight(frequency) {
   let points = 20;
-  let largeStraight = true;
+  let isLargeStraight = true;
   let i = 2;
-  while (i < frequency.length && largeStraight) {
+  while (i < frequency.length && isLargeStraight) {
     if (frequency[i] < 1) {
-      largeStraight = false;
+      isLargeStraight = false;
       points = 0;
     }
     i++;
@@ -123,16 +95,18 @@ function chance(frequency) {
 }
 
 function yatzy(frequency) {
-  let yatzyIsFound = true;
-  let points = 50;
+  let yatzyIsFound = false;
+  let points = 0;
 
-  let i = 0;
-  while (i < frequency.length && yatzyIsFound) {
-    if (frequency[i] < 5 && frequency[i] > 0) {
-      yatzyIsFound = false;
-      points = 0;
+  let i = 1;
+
+  while (i < frequency.length && !yatzyIsFound) {
+    if (frequency[i] === 5) {
+      yatzyIsFound = true;
+      points = 50;
+    } else {
+      i++;    
     }
-    i++;
   }
   return points;
 }
@@ -192,7 +166,7 @@ function startGame() {
     {
       title: "One pair",
       result: 0, isUsed: false,
-      calcResult: (frequency) => onePair(frequency),
+      calcResult: (frequency) => amountSame(frequency, 2),
     },
     {
       title: "Two pairs",
@@ -202,12 +176,12 @@ function startGame() {
     {
       title: "Three same",
       result: 0, isUsed: false,
-      calcResult: (frequency) => threeSame(frequency),
+      calcResult: (frequency) => amountSame(frequency, 3),
     },
     {
       title: "Four same",
       result: 0, isUsed: false,
-      calcResult: (frequency) => fourSame(frequency),
+      calcResult: (frequency) => amountSame(frequency, 4),
     },
     {
       title: "Full house",
@@ -274,11 +248,15 @@ function startGame() {
       }
 
       total += resultFromActual
+      
       // reset terningerne
       for (let die of dice) {
         die.hold = false
         die.value = 0
       }
+
+      //reset frequency
+      frequency = [0, 0, 0, 0, 0, 0 ,0]
 
       game.turn = 0
       results[resultNum].isUsed = true
@@ -287,7 +265,7 @@ function startGame() {
       //opdater variabel til at tjekke om spil er slut, og tjek om spil er slut
       resultsLeft--
       if (resultsLeft === 0) {
-        game.ended = true
+        game.isEnded = true
       }
     }
   }
@@ -320,15 +298,19 @@ function startGame() {
       }
   }
 
+  const getResults = function() {
+    return results
+  }
+
   game.dice = dice
   game.turn = 0
-  game.results = results
+  game.getResults = getResults
   game.sum = 0
   game.bonus = 0
   game.rollDice = rollDice
   game.toggleHold = (diceNum) => toggleHold(diceNum)
   game.chooseResult = (resultNum) => chooseResult(resultNum)
-  game.ended = false
+  game.isEnded = false
   game.getValue = (index) => getValue(index)
   game.getTotal = getTotal
 

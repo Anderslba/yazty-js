@@ -10,17 +10,18 @@ const total = document.querySelector(".total > input")
 let game = startGame()
 createScoreFields()
 
-const scoreValue = document.querySelectorAll(".scoreValue")
+const scoreValues = document.querySelectorAll(".score-value")
 
 //tilføj event listeners
 btnRollDie.addEventListener('click', () => {
     game.rollDice()
 
     for (let i = 0; i < dice.length; i++) {
-        dice[i].firstChild.src = `images/dice${game.dice[i].value}.png`
+        dice[i].querySelector('img').src = `images/dice${game.dice[i].value}.png`
     }
 
     turn.textContent = game.turn
+    btnRollDie.disabled = game.turn === 3
     updateScore()
 })
 
@@ -44,20 +45,34 @@ btnReset.addEventListener('click', () => {
 
 
 // hjælpemetoder
-function resetUi() {
-    for (let i = 0; i < dice.length; i++) {
-        dice[i].firstChild.src = 'images/blank.png'
-        dice[i].classList.remove('hold')
+function resetDice() {
+    for (let die of dice) {
+        die.querySelector('img').src = 'images/blank.png'
+        die.classList.remove('hold')
     }
+}
+
+function resetUi() {
+    resetDice()
     turn.textContent = game.turn
+    btnRollDie.disabled = false
+    sum.value = 0
+    bonus.value = 0
+    total.value = 0
+
+    for (let field of scoreValues) {
+        field.value = 0
+        field.classList.remove('selected')
+    }
 }
 
 function createScoreFields() {
-    for (let i = 0; i < game.results.length; i++) {
+    const results = game.getResults()
+    for (let i = 0; i < results.length; i++) {
         const label = document.createElement('label')
         const input = document.createElement('input')
 
-        label.textContent = game.results[i].title + ': '
+        label.textContent = results[i].title + ': '
         label.style.gridColumn = 1
         label.style.gridRow = i+1
 
@@ -65,11 +80,12 @@ function createScoreFields() {
         input.readOnly = true
         input.style.gridColumn = 2
         input.style.gridRow = i+1
+        input.value = 0
 
-        input.classList.add("scoreValue")
+        input.classList.add("score-value")
 
-        input.addEventListener('click', () => { 
-            if (game.turn > 0 && !game.results[i].isUsed) {
+        input.addEventListener('click', () => {
+            if (game.turn > 0 && !game.getResults()[i].isUsed) {
                 game.chooseResult(i)
                 turn.textContent = game.turn
                 input.classList.add("selected")
@@ -79,12 +95,14 @@ function createScoreFields() {
                 }
                 total.value = game.getTotal()
                 
-                resetUi()
-                if (game.ended) {
-                    window.alert(`Spillet er slut! Du fik: ${total.value} points`)
-                    btnRollDie.removeEventListener();
+                resetDice()
+                updateScore()
+
+                btnRollDie.disabled = game.isEnded
+                if (game.isEnded) {
+                    window.alert(`Spillet er slut! Du fik: ${total.value} point`)
+                    btnRollDie.disabled = true
                 }
-                
             }
             
         })
@@ -96,8 +114,8 @@ function createScoreFields() {
 
 
 function updateScore( ) {
-    for (let i = 0; i < scoreValue.length; i++ ) {
-        scoreValue[i].value = game.getValue(i) 
+    for (let i = 0; i < scoreValues.length; i++) {
+        scoreValues[i].value = game.getValue(i) 
     }
 }
 
